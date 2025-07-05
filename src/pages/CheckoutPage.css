@@ -1,0 +1,40 @@
+.checkout-wrapper {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 24px;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.checkout-wrapper h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.address input,
+.address textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.summary {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.pay-btn {
+  width: 100%;
+  padding: 12px;
+  background: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}

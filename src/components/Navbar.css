@@ -1,0 +1,60 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 28px;
+  background-color: #007aff;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+
+.navbar-center {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.search-input {
+  width: 90%;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background-color: #fff;
+  color: #007aff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  background-color: #e6e6e6;
+}
+
+.cart-count {
+  font-weight: bold;
+}

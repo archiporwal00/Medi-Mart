@@ -1,0 +1,39 @@
+.prescription-container {
+  text-align: center;
+  padding: 20px;
+  margin: 30px auto;
+  max-width: 700px;
+  /* max-height: 1000px; */
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+}
+
+.upload-box {
+  border: 2px dashed #007aff;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+.upload-box:hover {
+  background-color: #f0f8ff;
+}
+
+.preview-image {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.upload-btn {
+  margin-top: 12px;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
