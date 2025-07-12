@@ -1,60 +1,75 @@
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 28px;
-  background-color: #007aff;
-  color: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 999;
+  padding: 2px 20px;
+  background-color: #007BFF;
+  color: white;
+  flex-wrap: wrap;
+  gap: 12px;
 }
-
 
 .logo {
   font-size: 1.6rem;
-  font-weight: 700;
-  margin: 0;
+  font-weight: bold;
+  cursor: pointer;
 }
-
 
 .navbar-center {
-  flex: 1;
-  padding: 0 20px;
-}
-
-.search-input {
-  width: 90%;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-
-.navbar-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
-.nav-btn {
-  background-color: #fff;
-  color: #007aff;
+.search-input {
+  padding: 8px 12px;
+  font-size: 1rem;
+  width: 720px;
+  border-radius: 4px;
   border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 500;
+  outline: none;
+}
+
+.nav-btn {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  background-color: #fff;
+  color: #007BFF;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.2s ease;
-  white-space: nowrap;
+  transition: 0.2s ease-in-out;
 }
 
 .nav-btn:hover {
   background-color: #e6e6e6;
 }
 
-.cart-count {
-  font-weight: bold;
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-center,
+  .navbar-right {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 300px;
+  }
 }

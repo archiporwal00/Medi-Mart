@@ -51,7 +51,7 @@ export default function ChatBot() {
         </div>
       </div>
 
-      {/* Floating button */}
+      
       {!isOpen && (
         <button className="chatbot-toggle" onClick={() => setIsOpen(true)}>
           💬

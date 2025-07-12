@@ -7,7 +7,7 @@ export default function CartDrawer({ isOpen, onClose }) {
   const { cartItems, removeFromCart, cartTotal } = useContext(CartContext);
   const navigate = useNavigate();
 
-  /* go to /checkout */
+
   const handleCheckout = () => {
     onClose();              
     navigate("/checkout");  

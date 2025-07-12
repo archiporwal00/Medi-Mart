@@ -1,104 +1,85 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
-import useRazorpay from "react-razorpay";
 import "./CheckoutPage.css";
+import Confetti from "react-confetti";
 
 export default function CheckoutPage() {
-  const { cartItems, cartTotal, clearCart } = useContext(CartContext);
-  const Razorpay = useRazorpay();
-  const nav = useNavigate();
+  const { cartItems } = useContext(CartContext);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
-  const [form, setForm] = useState({ name: "", address: "", phone: "" });
-  const handleChange = (e) =>
-    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+const total = cartItems.reduce((sum, item) => sum + item.price, 0);
 
-  const pay = async () => {
-    if (!cartItems.length) return alert("Cart is empty!");
-
-    
-    const res = await fetch("/api/create-order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ total: cartTotal }),
-    }).then((r) => r.json());
-
-    const rzp = new Razorpay({
-      key: res.key,
-      amount: res.amount,
-      currency: "INR",
-      order_id: res.id,
-      name: "MediMart",
-      description: "Medicine Purchase",
-      prefill: { name: form.name, contact: form.phone },
-      handler: async (response) => {
-        // ② verify payment
-        const verify = await fetch("/api/verify", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(response),
-        }).then((r) => r.json());
-
-        if (verify.success) {
-          clearCart();
-          alert("✅ Order placed! Thank you.");
-          nav("/"); 
-        } else {
-          alert("Payment failed");
-        }
-      },
-    });
-
-    rzp.open();
+  const loadRazorpay = () => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onerror = () => alert("Razorpay SDK failed to load.");
+    script.onload = () => {
+      const options = {
+        key: "rzp_test_6rI46ULTCCLXhy",
+        amount: total * 100,
+        currency: "INR",
+        name: "MediMart",
+        description: "Medicine Purchase",
+        handler: function (response) {
+          console.log("Payment successful:", response.razorpay_payment_id);
+          setPaymentSuccess(true);
+          setShowConfetti(true);
+        },
+        prefill: {
+          name: "Archi Porwal",
+          email: "porwalarchi1406@gmail.com",
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#4F86C6",
+        },
+      };
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    };
+    document.body.appendChild(script);
   };
 
+  
+  useEffect(() => {
+    if (showConfetti) {
+      const timer = setTimeout(() => setShowConfetti(false), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [showConfetti]);
+
   return (
-    <div className="checkout-wrapper">
-      <h2>Checkout</h2>
+    <div className="checkout-container">
+      <h2>Complete Your Purchase</h2>
 
-      <section className="address">
-        <h3>Delivery Details</h3>
-        <input
-          name="name"
-          placeholder="Full Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="address"
-          placeholder="Address"
-          value={form.address}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="phone"
-          placeholder="Phone Number"
-          value={form.phone}
-          onChange={handleChange}
-          required
-        />
-      </section>
+      <div className="cart-summary">
+        {cartItems.length === 0 ? (
+          <p>Your cart is empty.</p>
+        ) : (
+          <>
+            <ul>
+              {cartItems.map((item, index) => (
+                <li key={index}>
+                  {item.name} - ₹{item.price}
+                </li>
+              ))}
+            </ul>
+            <h3>Total: ₹{total}</h3>
+            <button className="pay-now-btn" onClick={loadRazorpay}>
+              Pay Now 💳
+            </button>
+          </>
+        )}
+      </div>
 
-      <section className="summary">
-        <h3>Order Summary</h3>
-        {cartItems.map((item) => (
-          <p key={item.id}>
-            {item.name} × {item.quantity || 1} – ₹
-            {(item.price || 0) * (item.quantity || 1)}
-          </p>
-        ))}
-        <h4>Total: ₹{cartTotal}</h4>
-      </section>
+      {paymentSuccess && (
+        <div className="success-message">
+          ✅ Payment Successful! Thank you for your order.
+        </div>
+      )}
 
-      <button
-        className="pay-btn"
-        disabled={!form.name || !form.address || !form.phone}
-        onClick={pay}
-      >
-        Pay ₹{cartTotal} with Razorpay →
-      </button>
+      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
     </div>
   );
 }
